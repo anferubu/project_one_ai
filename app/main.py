@@ -8,7 +8,7 @@
 
 
 import numpy as np
-from queue import Queue
+from collections import deque
 
 # Load maze from file
 maze = np.loadtxt('./data/matrix.txt', dtype=int)
@@ -21,11 +21,11 @@ start = tuple(np.argwhere(maze == 0)[0])
 goal = tuple(np.argwhere(maze == 4)[0])
 
 # Initialize the queue and the visited set
-queue = Queue()
+queue = deque()
 visited = set()
 
 # Enqueue the starting position and mark it as visited
-queue.put(start)
+queue.append(start)
 visited.add(start)
 
 # Initialize the parent dictionary to keep track of the path
@@ -33,10 +33,19 @@ parent = {
     start: None
 }
 
+# Initialize a variable to keep track of the direction
+direction = 1  # 1 for left to right, -1 for right to left
+
 # BFS algorithm
-while not queue.empty():
-    # Dequeue current node
-    current = queue.get()
+num_nodes_at_level = 1
+current_level_nodes = [start]
+while queue:
+    print("Current level: ", current_level_nodes)
+    # Dequeue current node from left or right end of the queue
+    if direction == 1:
+        current = queue.popleft()
+    else:
+        current = queue.pop()
     # Evaluates if the node is the goal
     if current[0] == goal[0] and current[1] == goal[1]:
         break
@@ -49,10 +58,25 @@ while not queue.empty():
             # If the new position has not been visited and is not a wall
             if next_pos not in visited and maze[next_pos] != -1:
                 # Add the new position to the queue and to the list of visited nodes
-                queue.put(next_pos)
+                if direction == 1:
+                    queue.append(next_pos)
+                else:
+                    queue.appendleft(next_pos)
                 visited.add(next_pos)
                 # The parent of the next position is the current node
                 parent[next_pos] = current
+
+    # Change direction if the queue is not empty
+    if queue:
+        direction *= -1
+
+    # Update the current level of the tree
+    current_level_nodes = [pos for pos in parent.keys() if parent[pos] == current]
+    num_nodes_at_level = len(current_level_nodes)
+
+    # If the current level is empty, it means that there are no more nodes to visit
+    if num_nodes_at_level == 0:
+        break
 
 # Backtrack from the goal to the start to find the path
 path = []
@@ -64,4 +88,4 @@ path.append(start)
 path.reverse()
 
 # Print the path
-print(path)
+print("Shortest path: ", path)
