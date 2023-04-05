@@ -34,13 +34,13 @@ class Tablero:
 
                 if(item != 1 and item != -1):
                     photo = tk.PhotoImage(file="../images/pinocho.png")
-                    self.tablero.create_image(j*100, i*100, image=photo)
+                    self.tablero.create_image(j*100, i*100, image=photo, anchor=tk.NW)
                     
                  
 matrix =[[1, 3, 1, 3, 1],
-        [0, -1,  1,  1,  1],
-        [1,  1, -1, -1,  4],
-        [1,  1,  1,  2,  1]]
+        [0, -1, 1, 1, 1],
+        [1, 1, -1, -1, 4],
+        [1, 1, 1, 2, 1]]
 
 if __name__ == "__main__":
     app = Tablero(matrix)
