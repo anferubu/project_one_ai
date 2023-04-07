@@ -7,16 +7,39 @@ class Tablero:
         self.matrix = matrix
         self.path = path
         self.ventana = tk.Tk()
-        self.ventana.geometry(f"{str(len(self.matrix[0])*100)}x{str(len(self.matrix)*100)}")
+        #self.ventana.geometry(f"{str(len(self.matrix[0])*100)}x{str(len(self.matrix)*100)}")
         self.ventana.resizable(0,0)
-        self.tablero=tk.Canvas(self.ventana)
-        self.tablero.pack(fill="both", expand=1)
-        self.cuadrados()
-        self.imagenes()
-        #self.solve()
+        self.ventana.config(bg="black")
+
+        self.title = tk.Label(self.ventana, text="Proyecto #1 - IA", foreground="white", background="#000")
+        self.title.pack()
+
+        self.tablero=tk.Canvas(self.ventana, width=len(self.matrix[0])*100, height=len(self.matrix)*100)
+        self.tablero.pack()
+        
+        self.btnAlg1 = tk.Button(self.ventana, text="Amplitud")
+        self.btnAlg1.pack()
+
+        self.btnAlg2 = tk.Button(self.ventana, text="Profundidad")
+        self.btnAlg2.pack()
+        self.drawBoard()
         
         
-    def cuadrados(self):
+    def drawBoard(self):
+
+        for i in range(len(self.matrix)):
+            for j in range(len(self.matrix[i])):
+                item = matrix[i][j]
+                if(item == -1):
+                    color = "black"
+                else:
+                    color = "white"
+                
+                self.tablero.create_rectangle(j*100, i*100, (j+1)*100, (i+1)*100, fill=color)
+
+        self.printImages()
+
+    def drawBoardSolution(self):
 
         for i in range(len(self.matrix)):
             for j in range(len(self.matrix[i])):
@@ -31,8 +54,10 @@ class Tablero:
                 
                 self.tablero.create_rectangle(j*100, i*100, (j+1)*100, (i+1)*100, fill=color)
 
+        self.printImages()
 
-    def imagenes(self):
+
+    def printImages(self):
 
         self.images = {
             0: tk.PhotoImage(file=os.path.abspath("./images/pinocho.png")),
@@ -48,9 +73,6 @@ class Tablero:
                 if(item != 1 and item != -1):
                     self.tablero.create_image(j*100, i*100, image=self.images[item], anchor="nw")
                     
-    def solve(self):
-        for i in range(len(self.path)-1):
-            self.tablero.create_line(self.path[i][1] * 100 + 50, self.path[i][0] * 100 + 50, self.path[i+1][1] * 100 + 50, self.path[i+1][0] * 100 + 50, fill="green", width=5)
 
 matrix =[[1, 3, 1, 3, 1],
         [0, -1, 1, 1, 1],
