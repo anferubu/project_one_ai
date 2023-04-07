@@ -4,6 +4,7 @@ from PIL import Image, ImageTk as I
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import filedialog
+from tkinter import messagebox
 
 from constant import Constant
 
@@ -43,10 +44,6 @@ class Board(Constant):
         # Define the matrix
         self.matrix = self.maze.matrix
 
-        # Define the path
-        self.bfs = BFS(self.maze)
-        self.path = self.bfs.solve_zigzag()  # .solve() for normal BFS
-
     def _initialize(self):
         empty = self.COLORS['empty']
 
@@ -60,31 +57,83 @@ class Board(Constant):
             self.window)
         self.canvas.pack(padx=15, pady=15)
 
+        self.options = tk.Frame(self.window)
+        self.options.pack(padx=15, pady=15)
+
+        # Create the radio buttons for select the algorithm.
+        self.opcion = tk.IntVar()
+        tk.Radiobutton(
+            self.options, text="Amplitud", variable=self.opcion, value=1, font=('Arial', 12)
+            ).pack()
+        tk.Radiobutton(
+            self.options, text="Amplitud 2.0 (zig zag)", variable=self.opcion, value=2, font=('Arial', 12)
+            ).pack()
+        tk.Radiobutton(
+            self.options, text="Opción 3", variable=self.opcion, value=3, font=('Arial', 12)
+            ).pack()
+        
+        self.buttons = tk.Frame(self.window)
+        self.buttons.pack(side=tk.BOTTOM)
+
         # Create button to select the txt matrix file.
         self.select_button = tk.Button(
-            self.window, text='Select file', font=('Arial', 12), bg=empty,
+            self.buttons, text='Select file', font=('Arial', 12), bg=empty,
             relief='groove', padx=15, pady=5, command=self._choose_file)
         self.select_button.pack(side=tk.LEFT, padx=15, pady=15)
 
         # Create button to find the path from start to the goal
         self.find_path_btn = tk.Button(
-            self.window, text='Find path', font=('Arial', 12), bg=empty,
-            relief='groove', padx=15, pady=5, command=self._display_path)
+            self.buttons, text='Find path', font=('Arial', 12), bg=empty,
+            relief='groove', padx=15, pady=5, command=self._find_path)
         self.find_path_btn.pack(side=tk.LEFT, padx=15, pady=15)
 
+        
         # Create button to clear the board
         self.clear_btn = tk.Button(
-            self.window, text='Clear', font=('Arial', 12), relief='groove',
+            self.buttons, text='Clear', font=('Arial', 12), relief='groove',
             padx=15, pady=5, bg=empty, command=self._display_board)
         self.clear_btn.pack(side=tk.LEFT, padx=15, pady=15)
 
-    def _choose_file(self):
-        file_path = filedialog.askopenfilename()
-        self._charge_file(file_path)
+    def _find_path(self):
+        option = self.opcion.get()
+        
+        if(option == 0):
+            messagebox.showerror(message="Debe seleccionar una de las opciones.", title="Error")
+            return
+        # Define the path
+        self.bfs = BFS(self.maze)
+
+        METHODS = {
+            1: self.bfs.solve,
+            2: self.bfs.solve_zigzag
+        }
+
+        self.path = METHODS[option]()
+
         self._display_board()
+        self._display_path()
+        
+
+    def _choose_file(self):
+        # Launch the file selector.
+        file_path = filedialog.askopenfilename()
+        print(file_path)
+
+        if(file_path == ''):
+            messagebox.showinfo(message="No seleccionó ningún archivo de texto")
+            return
+        
+        # Charge the new matrix from path selectionated.
+        self._charge_file(file_path)
+
+        # Display the new board.
+        self._display_board()
+
+        # Center the window.
         self.window.eval('tk::PlaceWindow . center')
         
     def _config_canvas(self):
+        # Resize canvas for show full the board.
         self.height = self.SQUARE_SIZE * len(self.matrix)
         self.width = self.SQUARE_SIZE * len(self.matrix[0])
         self.canvas.config(width=self.width, height=self.height)
