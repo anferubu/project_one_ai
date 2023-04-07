@@ -29,46 +29,8 @@ class Board(Constant):
     def __init__(self, matrix, path):
         self.matrix = matrix
         self.path = path
-<<<<<<< HEAD
-        self.ventana = tk.Tk()
-        #self.ventana.geometry(f"{str(len(self.matrix[0])*100)}x{str(len(self.matrix)*100)}")
-        self.ventana.resizable(0,0)
-        self.ventana.config(bg="black")
-
-        self.title = tk.Label(self.ventana, text="Proyecto #1 - IA", foreground="white", background="#000")
-        self.title.pack()
-
-        self.tablero=tk.Canvas(self.ventana, width=len(self.matrix[0])*100, height=len(self.matrix)*100)
-        self.tablero.pack()
-        
-        self.btnAlg1 = tk.Button(self.ventana, text="Amplitud")
-        self.btnAlg1.pack()
-
-        self.btnAlg2 = tk.Button(self.ventana, text="Profundidad")
-        self.btnAlg2.pack()
-        self.drawBoard()
-        
-        
-    def drawBoard(self):
-
-        for i in range(len(self.matrix)):
-            for j in range(len(self.matrix[i])):
-                item = matrix[i][j]
-                if(item == -1):
-                    color = "black"
-                else:
-                    color = "white"
-                
-                self.tablero.create_rectangle(j*100, i*100, (j+1)*100, (i+1)*100, fill=color)
-
-        self.printImages()
-
-    def drawBoardSolution(self):
-=======
         self._initialize()
         self._display_board()
->>>>>>> refs/remotes/origin/main
-
 
     def _initialize(self):
         empty = self.COLORS['empty']
@@ -124,16 +86,9 @@ class Board(Constant):
                     width=2)
         self._set_images()
 
-        self.printImages()
-
-<<<<<<< HEAD
-
-    def printImages(self):
-=======
     def _set_images(self):
         size = self.SQUARE_SIZE
         sizes = (size, size)
->>>>>>> refs/remotes/origin/main
 
         self.images = {
             self.PINOCCHIO: I.PhotoImage(
@@ -146,29 +101,13 @@ class Board(Constant):
                 Image.open("./images/gepeto.png").resize(sizes)),
         }
 
-<<<<<<< HEAD
-                if(item != 1 and item != -1):
-                    self.tablero.create_image(j*100, i*100, image=self.images[item], anchor="nw")
-                    
 
-matrix =[[1, 3, 1, 3, 1],
-        [0, -1, 1, 1, 1],
-        [1, 1, -1, -1, 4],
-        [1, 1, 1, 2, 1]]
-
-path = [(1, 0), (2, 0), (3, 0), (3, 1), (3, 2), (3, 3), (3, 4), (2, 4)]
-
-if __name__ == "__main__":
-    app = Tablero(matrix, path)
-    app.ventana.mainloop()
-=======
         for i, row in enumerate(self.matrix):
             for j, value in enumerate(row):
                 if value not in [self.EMPTY, self.WALL]:
                     self.canvas.create_image(j*size, i*size,
                                              image=self.images[value],
                                              anchor="nw")
->>>>>>> refs/remotes/origin/main
 
 
     def _display_path(self):
