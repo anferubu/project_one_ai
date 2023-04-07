@@ -1,14 +1,18 @@
 from bfs import BFS
 from gui import Board
+from maze import Maze
 
 
 if __name__ == '__main__':
     # Open the file with a matrix
-    maze = BFS('./data/matrix2.txt')
+    maze = Maze('./data/matrix2.txt')
 
-    # Define the matrix and the path
+    # Define the matrix
     matrix = maze.matrix
-    path = maze.solve_zigzag()  # .solve() for normal BFS
+
+    # Define the path
+    bfs = BFS(maze)
+    path = bfs.solve_zigzag()  # .solve() for normal BFS
 
     # Run the app
     app = Board(matrix, path)

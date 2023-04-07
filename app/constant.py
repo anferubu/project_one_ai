@@ -1,7 +1,6 @@
 class Constant:
     """
-    Class that represents the numeric values of the matrix obtained
-    from a file.
+    Class that represents the numeric values of the maze.
     """
 
     WALL = -1

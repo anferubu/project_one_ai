@@ -3,6 +3,7 @@ from collections import deque
 import numpy as np
 
 from constant import Constant
+from maze import Maze
 
 
 
@@ -13,21 +14,16 @@ class BFS(Constant):
     exists), but it does not guarantee that the result is optimal.
     """
 
-    def __init__(self, filename:str):
+    def __init__(self, maze):
         """
-        Initializes the class instance with a numeric matrix from a file.
+        Initializes the class instance.
 
         Args:
-            filename (str): path to the file with the numeric matrix
-                            representing the maze.
+            maze (Maze): Maze instance that represents the board.
         """
-        # Load maze from file.
-        self.maze = np.loadtxt(filename, dtype=int)
-        self.matrix = self.maze.tolist()
-
-        # Define the start and goal positions.
-        self.start = tuple(np.argwhere(self.maze == self.PINOCCHIO)[0])
-        self.goal = tuple(np.argwhere(self.maze == self.GEPETTO)[0])
+        self.maze = maze.maze
+        self.start = maze.start
+        self.goal = maze.goal
 
 
     def solve(self) -> list|str:
@@ -222,8 +218,9 @@ class BFS(Constant):
 if __name__ == '__main__':
 
     # Open the file with a matrix
-    maze = BFS('./data/matrix.txt')
+    maze = Maze('./data/matrix.txt')
 
     # Find the path from the start to the goal
-    print("Solution BFS normal: ", maze.solve())
-    print("Solution BFS intercalado: ", maze.solve_zigzag())
+    bfs = BFS(maze)
+    print("Solution BFS normal: ", bfs.solve())
+    print("Solution BFS intercalado: ", bfs.solve_zigzag())
