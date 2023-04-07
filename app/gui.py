@@ -3,8 +3,12 @@ import time
 from PIL import Image, ImageTk as I
 import tkinter as tk
 import tkinter.ttk as ttk
+from tkinter import filedialog
 
 from constant import Constant
+
+from maze import Maze
+from bfs import BFS
 
 
 
@@ -22,15 +26,26 @@ class Board(Constant):
         'border': '#243B5D',
         'empty': '#FFF',
         'wall': '#2D2D2D',
-        'path': '#FAEDCB',
+        'path': '#7EF5FF',
     }
 
 
-    def __init__(self, matrix, path):
-        self.matrix = matrix
-        self.path = path
+    def __init__(self, file):
+        self._charge_file(file)
+
         self._initialize()
         self._display_board()
+
+    def _charge_file(self, file):
+         # Open the file with a matrix
+        self.maze = Maze(file)
+
+        # Define the matrix
+        self.matrix = self.maze.matrix
+
+        # Define the path
+        self.bfs = BFS(self.maze)
+        self.path = self.bfs.solve_zigzag()  # .solve() for normal BFS
 
     def _initialize(self):
         empty = self.COLORS['empty']
@@ -41,11 +56,15 @@ class Board(Constant):
         self.window.resizable(False, False)
 
         # Create the canvas
-        self.height = self.SQUARE_SIZE * len(self.matrix)
-        self.width = self.SQUARE_SIZE * len(self.matrix[0])
         self.canvas = tk.Canvas(
-            self.window, width=self.width, height=self.height)
+            self.window)
         self.canvas.pack(padx=15, pady=15)
+
+        # Create button to select the txt matrix file.
+        self.select_button = tk.Button(
+            self.window, text='Select file', font=('Arial', 12), bg=empty,
+            relief='groove', padx=15, pady=5, command=self._choose_file)
+        self.select_button.pack(side=tk.LEFT, padx=15, pady=15)
 
         # Create button to find the path from start to the goal
         self.find_path_btn = tk.Button(
@@ -59,12 +78,25 @@ class Board(Constant):
             padx=15, pady=5, bg=empty, command=self._display_board)
         self.clear_btn.pack(side=tk.LEFT, padx=15, pady=15)
 
-
+    def _choose_file(self):
+        file_path = filedialog.askopenfilename()
+        self._charge_file(file_path)
+        self._display_board()
+        self.window.eval('tk::PlaceWindow . center')
+        
+    def _config_canvas(self):
+        self.height = self.SQUARE_SIZE * len(self.matrix)
+        self.width = self.SQUARE_SIZE * len(self.matrix[0])
+        self.canvas.config(width=self.width, height=self.height)
+        
     def _display_board(self):
         """
         Paint the board depending on the size of the cells and the
         defined colors.
         """
+
+        self._config_canvas()
+
         empty = self.COLORS['empty']
         wall = self.COLORS['wall']
         border = self.COLORS['border']
@@ -133,16 +165,3 @@ class Board(Constant):
 
         self.find_path_btn.config(state=tk.NORMAL)
         self.clear_btn.config(state=tk.NORMAL)
-
-
-
-if __name__ == '__main__':
-    matrix = [[1,  3,  1,  3,  1],
-              [0, -1,  1,  1,  1],
-              [1,  1, -1, -1,  4],
-              [1,  1,  1,  2,  1]]
-
-    path = [(1, 0), (2, 0), (3, 0), (3, 1), (3, 2), (3, 3), (3, 4), (2, 4)]
-
-    app = Board(matrix, path)
-    app.window.mainloop()
