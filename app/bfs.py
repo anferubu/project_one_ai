@@ -2,20 +2,16 @@ from collections import deque
 
 import numpy as np
 
+from constant import Constant
 
 
-class BFS:
+
+class BFS(Constant):
     """
     Class that implements the Breadth-Preferring Search (BFS) algorithm.
     This algorithm is complete because it always finds an answer (if it
     exists), but it does not guarantee that the result is optimal.
     """
-
-    # Some values of the matrix of numbers.
-    START_VALUE = 0
-    GOAL_VALUE = 4
-    WALL_VALUE = -1
-
 
     def __init__(self, filename:str):
         """
@@ -27,10 +23,11 @@ class BFS:
         """
         # Load maze from file.
         self.maze = np.loadtxt(filename, dtype=int)
+        self.matrix = self.maze.tolist()
 
         # Define the start and goal positions.
-        self.start = tuple(np.argwhere(self.maze == self.START_VALUE)[0])
-        self.goal = tuple(np.argwhere(self.maze == self.GOAL_VALUE)[0])
+        self.start = tuple(np.argwhere(self.maze == self.PINOCCHIO)[0])
+        self.goal = tuple(np.argwhere(self.maze == self.GEPETTO)[0])
 
 
     def solve(self) -> list|str:
@@ -155,7 +152,7 @@ class BFS:
             (0 <= position[0] < self.maze.shape[0])
             and (0 <= position[1] < self.maze.shape[1])
             and position not in self.visited
-            and self.maze[position] != self.WALL_VALUE
+            and self.maze[position] != self.WALL
         )
 
 
