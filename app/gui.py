@@ -98,14 +98,16 @@ class Board(Constant):
         option = self.opcion.get()
         
         if(option == 0):
-            messagebox.showerror(message="Debe seleccionar una de las opciones.", title="Error")
+            messagebox.showwarning(
+                message="Debe seleccionar una de las opciones.", title="Cuidado"
+                )
             return
         # Define the path
-        self.bfs = BFS(self.maze)
+        bfs = BFS(self.maze)
 
         METHODS = {
-            1: self.bfs.solve,
-            2: self.bfs.solve_zigzag
+            1: bfs.solve,
+            2: bfs.solve_zigzag
         }
 
         self.path = METHODS[option]()
@@ -115,12 +117,15 @@ class Board(Constant):
         
 
     def _choose_file(self):
+        if(not  messagebox.askokcancel(message="Are you sure you want to open another file?", title="Sure?")):
+            return
+
         # Launch the file selector.
         file_path = filedialog.askopenfilename()
         print(file_path)
 
         if(file_path == ''):
-            messagebox.showinfo(message="No seleccionó ningún archivo de texto")
+            messagebox.showinfo(message="No seleccionó ningún archivo de texto", title="No file selected")
             return
         
         # Charge the new matrix from path selectionated.
