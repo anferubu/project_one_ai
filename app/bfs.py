@@ -14,7 +14,7 @@ class BFS(Constant):
     exists), but it does not guarantee that the result is optimal.
     """
 
-    def __init__(self, maze):
+    def __init__(self, maze:Maze):
         """
         Initializes the class instance.
 
@@ -91,7 +91,8 @@ class BFS(Constant):
         to keep track of the path.
         """
         self.queue = deque()
-        self.visited = set()
+        self.visited = set()    # disordered, unique
+        self.visited_list = []  # ordered
         self.parent = {self.start: None}
 
 
@@ -163,6 +164,7 @@ class BFS(Constant):
             bool: True if the position has been visited.
         """
         self.visited.add(position)
+        self.visited_list.append(position)
 
 
     def _add_to_queue(self, position:tuple[int, int], dir:int|None=None):
@@ -209,7 +211,7 @@ class BFS(Constant):
                 return 'No existe una solución'
 
         path.append(self.start)
-        path.reverse()
+        #path.reverse()
 
         return path
 
