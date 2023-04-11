@@ -1,10 +1,13 @@
 import time
+import random
+import numpy as np
 
 from PIL import Image, ImageTk as I
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import filedialog
 from tkinter import messagebox
+from tkinter import simpledialog
 
 from constant import Constant
 
@@ -60,7 +63,6 @@ class Board(Constant):
         # Define the matrix.
         self.matrix = self.maze.matrix
 
-
     def _initialize(self):
         """
         Initializes all the graphical elements of the window.
@@ -70,7 +72,7 @@ class Board(Constant):
         # Create the window.
         self.window = tk.Tk()
         self.window.title(self.TITLE)
-        self.window.resizable(True, True)
+        self.window.resizable(False, False)
 
         # Create the canvas that represents the board.
         self.canvas = tk.Canvas(self.window)
@@ -96,13 +98,13 @@ class Board(Constant):
         self.buttons.pack(fill='x', expand=True, padx=10, pady=10)
 
         # Create button to find the path from start to the goal.
-        self.find_path_btn = tk.Button(self.buttons, text='Find path',
+        self.find_path_btn = tk.Button(self.buttons, text='Buscar camino',
             font=('Arial', 11), bg=empty, relief='groove', padx=15,
             command=self._find_path)
         self.find_path_btn.pack(side=tk.LEFT, fill='x', padx=5, pady=5)
 
         # Create button to clear the board.
-        self.clear_btn = tk.Button(self.buttons, text='Clear',
+        self.clear_btn = tk.Button(self.buttons, text='Borrar',
             font=('Arial', 11), relief='groove', padx=15, bg=empty,
             command=self._display_board)
         self.clear_btn.pack(side=tk.RIGHT, anchor='e', padx=5, pady=5)
@@ -112,13 +114,43 @@ class Board(Constant):
         self.window.config(menu=self.menubar)
 
         self.menu = tk.Menu(self.menubar, tearoff=False)
-        self.menu.add_command(label='Abrir archivo', command=self._choose_file)
+        self.menu.add_command(label='Abrir mapa desde archivo', command=self._choose_file)
+        self.menu.add_command(label='Generar mapa aleatorio', command=self._generate_random)
         self.menu.add_separator()
         self.menu.add_command(label='Acerca de', command=self.about_us)
         self.menu.add_command(label='Salir', command=self.window.quit)
 
         self.menubar.add_cascade(label='Archivo', menu=self.menu)
 
+
+    def _generate_random(self):
+        
+
+        master = tk.Tk()
+        master.resizable(False, False)
+
+        tk.Label(master, text="Ingrese los datos").grid(row=0, column=0, columnspan=2)
+        tk.Label(master, text="Filas:").grid(pady=5, row=1, column=0, sticky='nw')
+        tk.Label(master, text="Columnas:").grid(pady=5, row=2, column=0, sticky='nw')
+
+        rows = tk.Entry(master, width=40).grid(padx=5, row=1, column=1)
+        columns = tk.Entry(master, width=40).grid(padx=5, row=2, column=1)
+
+
+
+        tk.Button(master, text="Aceptar", command=lambda:print('1')).grid(pady=10, row=3, column=0, sticky='nsew')
+        tk.Button(master, text='Cancelar', command=lambda:print('2')).grid(pady=10, row=3, column=1, sticky='nsew')
+        master.mainloop()
+
+        return
+
+        values = [self.WALL, self.EMPTY, self.FOX, self.CIGAR]
+        random_matrix = np.random.choice(values, size=(n,m))
+        
+        print(random.randrange(1,5))
+
+        #self._charge_file(random_matrix)
+        #self._show_new_board()
 
     def _choose_file(self):
         """
@@ -144,6 +176,9 @@ class Board(Constant):
                        +'\n\nPor favor seleccione un archivo adecuado.'
             )
 
+        self._show_new_board()
+
+    def _show_new_board(self):
         # Display the new board.
         self._display_board()
 
