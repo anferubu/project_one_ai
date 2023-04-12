@@ -13,6 +13,7 @@ from createRandom import Random
 from maze import Maze
 from bfs import BFS
 from ucs import UCS
+from ids import IDS
 
 
 
@@ -206,7 +207,9 @@ class Board(Constant):
 
         # Iterative Deepening Search.
         elif option == 4:
-            print()
+            ids = IDS(self.maze)
+            path = ids.solve()
+            visited = ids.visited_list
 
         self._display_board()
         self._display_path(path, visited)
