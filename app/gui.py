@@ -1,5 +1,4 @@
 import time
-import random
 import numpy as np
 
 from PIL import Image, ImageTk as I
@@ -7,9 +6,9 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import filedialog
 from tkinter import messagebox
-from tkinter import simpledialog
 
 from constant import Constant
+from createRandom import Random
 
 from maze import Maze
 from bfs import BFS
@@ -122,34 +121,11 @@ class Board(Constant):
 
         self.menubar.add_cascade(label='Archivo', menu=self.menu)
 
-
     def _generate_random(self):
-        
+        Random(self)
 
-        master = tk.Tk()
-        master.resizable(False, False)
-
-        tk.Label(master, text="Ingrese los datos").grid(row=0, column=0, columnspan=2)
-        tk.Label(master, text="Filas:").grid(pady=5, row=1, column=0, sticky='nw')
-        tk.Label(master, text="Columnas:").grid(pady=5, row=2, column=0, sticky='nw')
-
-        rows = tk.Entry(master, width=40).grid(padx=5, row=1, column=1)
-        columns = tk.Entry(master, width=40).grid(padx=5, row=2, column=1)
-
-
-
-        tk.Button(master, text="Aceptar", command=lambda:print('1')).grid(pady=10, row=3, column=0, sticky='nsew')
-        tk.Button(master, text='Cancelar', command=lambda:print('2')).grid(pady=10, row=3, column=1, sticky='nsew')
-        master.mainloop()
-
-        return
-
-        values = [self.WALL, self.EMPTY, self.FOX, self.CIGAR]
-        random_matrix = np.random.choice(values, size=(n,m))
-        
-        print(random.randrange(1,5))
-
-        #self._charge_file(random_matrix)
+        #self.maze = Maze('', matrix = frame.random_matrix)
+        #self.matrix = self.maze.matrix
         #self._show_new_board()
 
     def _choose_file(self):
