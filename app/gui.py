@@ -124,10 +124,6 @@ class Board(Constant):
     def _generate_random(self):
         Random(self)
 
-        #self.maze = Maze('', matrix = frame.random_matrix)
-        #self.matrix = self.maze.matrix
-        #self._show_new_board()
-
     def _choose_file(self):
         """
         Read a file and display the maze that it contains.
