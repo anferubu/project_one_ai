@@ -9,7 +9,7 @@ class Maze(Constant):
     Class that represents a maze.
     """
 
-    def __init__(self, filename:str):
+    def __init__(self, filename:str, matrix = None):
         """
         Initializes the class instance with a numeric matrix from a file.
 
@@ -17,8 +17,12 @@ class Maze(Constant):
             filename (str): path to the file with the numeric matrix
                             representing the maze.
         """
-        # Load maze from file.
-        self.maze = np.loadtxt(filename, dtype=int)
+        if not matrix is None:
+            self.maze = np.array(matrix)
+        else:
+            # Load maze from file.
+            self.maze = np.loadtxt(filename, dtype=int)
+            
         self.matrix = self.maze.tolist()
 
         # Define the start and goal positions.
