@@ -37,7 +37,7 @@ class UCS(Constant):
         self._add_to_queue(self.start, 0)
         self._mark_visited(self.start)
 
-        while self.queue:
+        while not self.queue.empty():
             current_cost, current = self.queue.get()
             if self._is_goal(current):
                 break
