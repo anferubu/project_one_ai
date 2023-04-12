@@ -1,7 +1,5 @@
 from collections import deque
 
-import numpy as np
-
 from constant import Constant
 from maze import Maze
 
