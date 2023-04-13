@@ -29,10 +29,10 @@ class Board(Constant):
 
     COLORS = {
         'border': '#243B5D',
-        'empty': '#FFF',
+        'empty': '#FFEBD4',
         'wall': '#2D2D2D',
-        'visited': '#FAEDCB',
-        'path': '#7EF5FF',
+        'visited': '#A77F50',
+        'path': '#FFC500',
     }
 
 
@@ -74,38 +74,43 @@ class Board(Constant):
         self.window.title(self.TITLE)
         self.window.resizable(False, False)
 
+        # Select an image as the background of the window
+        self.background_image = tk.PhotoImage(file="./images/fondo.png")
+        bg_label = tk.Label(self.window, image=self.background_image)
+        bg_label.place(x=0,y=0, relwidth=1, relheight=1)
+   
         # Create the canvas that represents the board.
         self.canvas = tk.Canvas(self.window)
         self.canvas.pack(padx=5, pady=5)
 
         # Create the frame that contains the radio buttons with the options.
-        self.options = tk.Frame(self.window)
+        self.options = tk.Frame(self.window,bg='#FEDBB3', border='10')
         self.options.pack(fill='x', expand=True, padx=10, pady=10)
 
         # Create the radio buttons for select the algorithm.
         self.option = tk.IntVar()
         tk.Radiobutton(self.options, text="Búsqueda por amplitud.",
-            variable=self.option, value=1, font=('Arial', 12)).pack(anchor='w')
+            variable=self.option, value=1, font=('Arial', 12), bg='#FEDBB3' ,cursor='hand2').pack(anchor='w')
         tk.Radiobutton(self.options, text="Búsqueda por amplitud (zigzag).",
-            variable=self.option, value=2, font=('Arial', 12)).pack(anchor='w')
+            variable=self.option, value=2, font=('Arial', 12), bg='#FEDBB3' ,cursor='hand2').pack(anchor='w')
         tk.Radiobutton(self.options, text="Búsqueda por costo uniforme.",
-            variable=self.option, value=3, font=('Arial', 12)).pack(anchor='w')
+            variable=self.option, value=3, font=('Arial', 12), bg='#FEDBB3' ,cursor='hand2').pack(anchor='w')
         tk.Radiobutton(self.options,text="Búsqueda por profundidad iterativa.",
-            variable=self.option, value=4, font=('Arial', 12)).pack(anchor='w')
+            variable=self.option, value=4, font=('Arial', 12), bg='#FEDBB3' ,cursor='hand2').pack(anchor='w')
 
         # Create the frame that contains the buttons.
-        self.buttons = tk.Frame(self.window)
+        self.buttons = tk.Frame(self.window,bg='#FEDBB3',borderwidth=5)
         self.buttons.pack(fill='x', expand=True, padx=10, pady=10)
 
         # Create button to find the path from start to the goal.
         self.find_path_btn = tk.Button(self.buttons, text='Buscar camino',
-            font=('Arial', 11), bg=empty, relief='groove', padx=15,
+            font=('Impact', 11), bg='#5F3119',fg='#FFE4D5',cursor='hand2', relief='flat', padx=15,
             command=self._find_path)
         self.find_path_btn.pack(side=tk.LEFT, fill='x', padx=5, pady=5)
 
         # Create button to clear the board.
         self.clear_btn = tk.Button(self.buttons, text='Borrar',
-            font=('Arial', 11), relief='groove', padx=15, bg=empty,
+            font=('Impact', 11), relief='flat',cursor='hand2', padx=15, bg='#5F3119',fg='#FFE4D5',
             command=self._display_board)
         self.clear_btn.pack(side=tk.RIGHT, anchor='e', padx=5, pady=5)
 
@@ -273,14 +278,20 @@ class Board(Constant):
                 Image.open("./images/zorro.png").resize(sizes)),
             self.GEPETTO: I.PhotoImage(
                 Image.open("./images/gepeto.png").resize(sizes)),
+            self.WALL: I.PhotoImage(
+                Image.open("./images/fondo.png").resize(sizes)
+            ),
+            self.EMPTY: I.PhotoImage(
+                Image.open("./images/suelo.png").resize(sizes)
+            )
+            
         }
 
         for i, row in enumerate(self.matrix):
             for j, value in enumerate(row):
-                if value not in [self.EMPTY, self.WALL]:
-                    self.canvas.create_image(j*size, i*size,
-                                             image=self.images[value],
-                                             anchor="nw")
+                self.canvas.create_image(j*size, i*size,
+                                        image=self.images[value],
+                                            anchor="nw")
 
 
     def _display_path(self, pathway:list=None, extends:list=None):
