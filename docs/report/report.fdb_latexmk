@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex report"] 1682974462 "report.aux" "report.bbl" "report" 1682974462 0
+["bibtex report"] 1682974597 "report.aux" "report.bbl" "report" 1682974597 0
   "/usr/share/texmf-dist/bibtex/bst/base/ieeetr.bst" 1680514707 18361 1a00e58565e7f19bf2b3e1bfb82254ae ""
   "referencias.bib" 0 -1 0 ""
-  "report.aux" 1682974462 1487 1b09be18a67ad100f8ef023e9b38e1e1 "pdflatex"
+  "report.aux" 1682974597 1487 1b09be18a67ad100f8ef023e9b38e1e1 "pdflatex"
   (generated)
   "report.bbl"
   "report.blg"
   (rewritten before read)
-["pdflatex"] 1682974461 "/home/juansgc/Documents/Univalle/Semestre_07/Inteligencia_Artificial/project_one_ai/docs/report/report.tex" "report.pdf" "report" 1682974462 0
+["pdflatex"] 1682974597 "/home/juansgc/Documents/Univalle/Semestre_07/Inteligencia_Artificial/project_one_ai/docs/report/report.tex" "report.pdf" "report" 1682974597 0
   "/home/juansgc/Documents/Univalle/Semestre_07/Inteligencia_Artificial/project_one_ai/docs/report/report.tex" 1682972027 1211 cd3575490b5a079c4cb0abc93d7b9732 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1680514707 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1680514707 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -55,10 +55,10 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1680514707 39911 2da6c67557ec033436fe5418a70a8a61 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1682553373 334215 ad2feb41952e3720830b65f83a01c5b0 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1682553350 8204105 6110b5a1a9c9acba8a1e4411c7463923 ""
-  "report.aux" 1682974462 1487 1b09be18a67ad100f8ef023e9b38e1e1 "pdflatex"
+  "report.aux" 1682974597 1487 1b09be18a67ad100f8ef023e9b38e1e1 "pdflatex"
   "report.bbl" 0 -1 0 "bibtex report"
   "report.tex" 1682972027 1211 cd3575490b5a079c4cb0abc93d7b9732 ""
-  "report.toc" 1682974462 464 323ea26f1edf4ad653ef5bfaf76780ae "pdflatex"
+  "report.toc" 1682974597 464 323ea26f1edf4ad653ef5bfaf76780ae "pdflatex"
   "titlesec.sty" 1682971537 40611 328121acbaa60431a5a8381c441bf1d3 ""
   (generated)
   "report.aux"
