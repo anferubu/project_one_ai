@@ -1,0 +1,8 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}Introducción}{2}{}%
+\contentsline {chapter}{\numberline {2}Revisión Bibliográfica}{3}{}%
+\contentsline {chapter}{\numberline {3}Metodología}{4}{}%
+\contentsline {chapter}{\numberline {4}Resultados}{5}{}%
+\contentsline {chapter}{\numberline {5}Discusión}{6}{}%
+\contentsline {chapter}{\numberline {6}Conclusiones y Trabajo Futuro}{7}{}%
+\contentsline {chapter}{\numberline {A}Código}{8}{}%
