@@ -1,9 +1,11 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage{graphicx}
 \usepackage[spanish]{babel}
 \usepackage[a4paper]{geometry}
 \usepackage{hyperref}
 \usepackage[none]{hyphenat}
+\usepackage{listings}
+\usepackage{color}
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
@@ -11,6 +13,19 @@
     urlcolor=cyan,
     pdfpagemode=FullScreen,
     }
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{deepblue},
+    stringstyle=\color{deepgreen},
+    emphstyle=\ttb\color{deepred},
+    showstringspaces=false,
+    breaklines=true,
+    frame=single
+}
 \pagestyle{headings}
 \title{Pinocho Univalle}
 \begin{document}
@@ -41,8 +56,52 @@ Un agente inteligente, es una entidad capaz de percibir su entorno, procesar tal
 En este proyecto, implementaremos algunos de los algoritmos de búsqueda no informada, aplicados a los agentes inteligentes, que aprendimos en lo que lleva del curso de Introducción a la Inteligencia Artificial.
 \clearpage
 \section{Objetivo}
+Este proyecto tiene como objetivo aplicar los conceptos vistos en el transcurso del curso desarrollando un agente inteligente para Pinocho que le ayude a encontrar a Gepetto. Para lograrlo debemos tener en cuenta los siguientes puntos:
+\begin{itemize}
+    \item El agente se mueve a los espacios vacíos o hacia Gepetto con costo 1.
+    \item Si el agente pasa por los cigarrillos, cuesta 2.
+    \item Si el agente pasa por algún zorro, cuesta 3.
+    \item La matriz debe leerse desde un archivo de texto.
+    \item Se debe implementar la técnica de amplitud (en este caso aplicando una variante en la que se recorra en zig zag), costo uniforme y profundidad iterativa.
+    \item Debe al final definir con buenos criterios, cuál de las tres estrategias fue mejor y por qué.
+\end{itemize}
 \clearpage
 \section{Desarrollo}
+\begin{enumerate}
+    \item Creamos una clase \textit{Maze} para almacenar el tablero de juego, que se puede leer desde una matriz numérica dentro de un archivo de texto. Para esto, hacemos uso de la librería \textit{Numpy}, que nos permite hacer la lectura del archivo de texto y representarlo como un arreglo. Por último, se define el punto de partida (la posición de Pinocho) y el punto de destino (la posición de Gepetto).\\
+\begin{lstlisting}[style=pythonstyle]
+import numpy as np
+from constant import Constant
+
+class Maze(Constant):
+    """
+    Class that represents a maze.
+    """
+
+    def __init__(self, filename:str, matrix = None):
+        """
+        Initializes the class instance with a numeric
+        matrix from a file.
+
+        Args:
+            filename (str): path to the file with the
+            numeric matrix representing the maze.
+        """
+        if not matrix is None:
+            self.maze = np.array(matrix)
+        else:
+            # Load maze from file.
+            self.maze = np.loadtxt(filename, dtype=int)
+            
+        self.matrix = self.maze.tolist()
+
+        # Define the start and goal positions.
+        self.start = tuple(
+            np.argwhere(self.maze == self.PINOCCHIO)[0])
+        self.goal = tuple(
+            np.argwhere(self.maze == self.GEPETTO)[0])
+\end{lstlisting}
+\end{enumerate}
 \clearpage
 \section{Conclusión}
 \clearpage
