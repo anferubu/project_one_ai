@@ -14,8 +14,7 @@ class Maze(Constant):
         Initializes the class instance with a numeric matrix from a file.
 
         Args:
-            filename (str): path to the file with the numeric matrix
-                            representing the maze.
+            filename (str): path to the file with the numeric matrix representing the maze.
         """
         if not matrix is None:
             self.maze = np.array(matrix)
