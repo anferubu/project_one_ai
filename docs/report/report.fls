@@ -566,6 +566,10 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm
 OUTPUT report.toc
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmsl12.tfm
+INPUT ./desarrollo.tex
+INPUT desarrollo.tex
+INPUT ./desarrollo.tex
+INPUT desarrollo.tex
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
@@ -574,6 +578,14 @@ INPUT ./BFS.tex
 INPUT BFS.tex
 INPUT ./BFS.tex
 INPUT BFS.tex
+INPUT ./UCS.tex
+INPUT UCS.tex
+INPUT ./UCS.tex
+INPUT UCS.tex
+INPUT ./IDS.tex
+INPUT IDS.tex
+INPUT ./IDS.tex
+INPUT IDS.tex
 INPUT report.aux
 INPUT ./report.out
 INPUT ./report.out

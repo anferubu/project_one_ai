@@ -72,43 +72,13 @@ Este proyecto tiene como objetivo aplicar los conceptos vistos en el transcurso 
 \end{itemize}
 \clearpage
 \section{Desarrollo}
-Creamos una clase \lstinline{Maze} para almacenar el tablero de juego, que se puede leer desde una matriz numérica dentro de un archivo de texto. Para esto, hacemos uso de la librería \lstinline{Numpy}, que nos permite hacer la lectura del archivo de texto y representarlo como un arreglo. Por último, se define el punto de partida (la posición de Pinocho) y el punto de destino (la posición de Gepetto).\\
-\begin{lstlisting}
-import numpy as np
-from constant import Constant
-
-class Maze(Constant):
-    """
-    Class that represents a maze.
-    """
-
-    def __init__(self, filename:str, matrix = None):
-        """
-        Initializes the class instance with a numeric
-        matrix from a file.
-
-        Args:
-            filename (str): path to the file with the
-            numeric matrix representing the maze.
-        """
-        if not matrix is None:
-            self.maze = np.array(matrix)
-        else:
-            # Load maze from file.
-            self.maze = np.loadtxt(filename, dtype=int)
-            
-        self.matrix = self.maze.tolist()
-
-        # Define the start and goal positions.
-        self.start = tuple(
-            np.argwhere(self.maze == self.PINOCCHIO)[0])
-        self.goal = tuple(
-            np.argwhere(self.maze == self.GEPETTO)[0])
-\end{lstlisting}
+\input{desarrollo.tex}
 \subsection{Búsqueda por amplitud}
 \input{BFS.tex}
 \subsection{Búsqueda por costo uniforme}
-\clearpage
+\input{UCS.tex}
+\subsection{Búsqueda por profundidad iterativa}
+\input{IDS.tex}
 \section{Conclusión}
 \clearpage
 \end{document}
