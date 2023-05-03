@@ -1,5 +1,4 @@
 \documentclass[12pt, letterpaper]{article}
-\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage[spanish]{babel}
@@ -107,128 +106,8 @@ class Maze(Constant):
             np.argwhere(self.maze == self.GEPETTO)[0])
 \end{lstlisting}
 \subsection{Búsqueda por amplitud}
-El algoritmo de búsqueda por amplitud está contenido dentro de la clase \lstinline{BFS}, cuyo método constructor recibe únicamente una instancia de \lstinline{Maze} y a partir de ella define los atributos maze (matriz que representa el laberinto), \lstinline{start} (Pinocho) y \lstinline{goal} (Gepetto).\\
-\begin{lstlisting}
-from collections import deque
-
-from constant import Constant
-from maze import Maze
-
-class BFS(Constant):
-    """
-    Class that implements the Breadth-Preferring Search
-    (BFS) algorithm.
-    This algorithm is complete because it always finds
-    an answer (if it exists), but it does not guarantee
-    that the result is optimal.
-    """
-
-    def __init__(self, maze:Maze):
-        """
-        Initializes the class instance.
-        Args:
-            maze (Maze): Maze instance that represents
-            the board.
-        """
-        self.maze = maze.maze
-        self.start = maze.start
-        self.goal = maze.goal
-\end{lstlisting}
-\clearpage
-La implementación del algoritmo como tal está en el método \lstinline{solve()} de la misma clase. El método primero inicializa las variables necesarias, entre las cuales se tiene una cola y una lista de nodos visitados. Se toma la posición inicial, donde está Pinocho, y se añade a la cola y a la lista de nodos visitados.\\\\
-Mientras la cola tenga elementos, se retira el primero de ellos y se evalúa si es la meta (Gepetto) en cuyo caso sale del ciclo. Si no es meta, se explora sus vecinos y se repite el ciclo. Una vez encontrada la meta, se traza el camino desde Gepetto hasta Pinocho.\\\\
-La lógica del algoritmo está separada en distintos métodos auxiliares que facilitan la lectura del código. Posteriormente se analizará cada método utilizado en la solución.\\
-\begin{lstlisting}
-def solve(self) -> list|str:
-    """
-    Implements the BFS algorithm.This implementation
-    avoids returning to already visited nodes.
-    Returns:
-        (List): path from the start position to the
-        end position.
-    """
-    self._initialize()
-
-    # Enqueue the starting position and mark it as visited.
-    self._add_to_queue(self.start)
-    self._mark_visited(self.start)
-
-    while self.queue:
-        current = self.queue.popleft()
-        if self._is_goal(current):
-            break
-        self._explore_neighbors(current)
-    return self._backtrack()
-\end{lstlisting}
-\clearpage
-El algoritmo alternativo de la búsqueda por amplitud, en donde se empieza buscando de izquierda a derecha y en el siguiente nivel de derecha a izquierda, y viceversa, se implementó en el método \lstinline{solve_zigzag()}.
-\\\newline
-Este es muy similar al anterior, solamente que se añade una variable direction (1 o -1) para controlar el sentido de la búsqueda. Así, sí direction es 1, se saca el primer elemento de la cola, si es -1 se saca el último. Cuando se termina de explorar todos los vecinos y si aún hay elementos en la cola, \lstinline{direction} cambia de signo para comenzar a buscar en el siguiente nivel desde la dirección opuesta.
-\clearpage
-\begin{lstlisting}
-def solve_zigzag(self) -> list|str:
-    """
-    Implements the BFS algorithm in a zigzag pattern. For
-    this, it uses a list and takes out the nodes from the
-    extreme left or right depending on the level.
-    This implementation avoids returning to already visited
-    nodes.
-    Returns:
-        (List): path from the start position to the end
-        position.
-    """
-    self._initialize()
-
-    # Enqueue the starting position and mark it as visited.
-    self._add_to_queue(self.start)
-    self._mark_visited(self.start)
-
-    # Initialize a variable to keep track of the direction.
-    # 1 for left to right, -1 for right to left.
-    direction = 1
-
-    while self.queue:
-        if direction == 1:
-            current = self.queue.popleft()
-        else:
-            current = self.queue.pop()
-        if self._is_goal(current):
-            break
-        self._explore_neighbors(current, direction)
-
-        # Change direction if the queue is not empty.
-        if self.queue:
-            direction *= -1
-
-    return self._backtrack()
-\end{lstlisting}
-\clearpage
-A continuación, vamos a ver los métodos auxiliares que encapsulan parte de la lógica.\\\newline
-El método \lstinline{_initialize()} inicializa una cola, un objeto Set (almacena elementos no repetidos) que guardará los nodos visitados, una lista de nodos visitados en orden y un diccionario \lstinline{parent} que servirá para reconstruir el camino desde la meta hasta el inicio.\\
-\begin{lstlisting}
-def _initialize(self):
-    """
-    Initializes the queue, the visited set and the parent
-    dictionary to keep track of the path.
-    """
-    self.queue = deque()
-    self.visited = set()    # disordered, unique
-    self.visited_list = []  # ordered
-    self.parent = {self.start: None}
-\end{lstlisting}
-El método \lstinline{_is_goal()} toma una posición dentro del laberinto y evalúa si es meta, es decir, si corresponde con Gepetto.\\
-\begin{lstlisting}
-def _is_goal(self, position:tuple[int, int]) -> bool:
-    """
-    Evaluates if a given position is the goal.
-    Args:
-        position (tuple): a specific position within the
-        maze.
-    Returns:
-        bool: True if the position is the goal.
-    """
-    return position == self.goal
-\end{lstlisting}
+\input{BFS.tex}
+\subsection{Búsqueda por costo uniforme}
 \clearpage
 \section{Conclusión}
 \clearpage

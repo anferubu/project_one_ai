@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1683149673 "/home/juansgc/Documents/Univalle/Semestre_07/Inteligencia_Artificial/project_one_ai/docs/report/report.tex" "report.pdf" "report" 1683149675 0
-  "/home/juansgc/Documents/Univalle/Semestre_07/Inteligencia_Artificial/project_one_ai/docs/report/report.tex" 1683149672 9661 85defe16d1b3937fbd2609cd824dff33 ""
+["pdflatex"] 1683153151 "/home/juansgc/Documents/Univalle/Semestre_07/Inteligencia_Artificial/project_one_ai/docs/report/report.tex" "report.pdf" "report" 1683153152 0
+  "/home/juansgc/Documents/Univalle/Semestre_07/Inteligencia_Artificial/project_one_ai/docs/report/report.tex" 1683153151 4367 16b58116895d09d224202d902cde0030 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1680514707 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1680514707 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm" 1680514707 1300 63a6111ee6274895728663cf4b4e7e81 ""
@@ -50,7 +50,6 @@
   "/usr/share/texmf-dist/tex/latex/base/article.cls" 1680514707 20144 d5ecf0a5140c8d8d8b72cbe86e320eff ""
   "/usr/share/texmf-dist/tex/latex/base/atbegshi-ltx.sty" 1680514707 3052 30236f0cc243a8651b82240dfd2e8b9d ""
   "/usr/share/texmf-dist/tex/latex/base/atveryend-ltx.sty" 1680514707 2462 8ce5f9a9c63002f2c1af03c262cf29af ""
-  "/usr/share/texmf-dist/tex/latex/base/inputenc.sty" 1680514707 5048 84b05796b49b69e2d4257d537721c960 ""
   "/usr/share/texmf-dist/tex/latex/base/size12.clo" 1680514707 8449 c314623021fbddd0180c05345324933c ""
   "/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty" 1680514707 13886 d1306dcf79a944f6988e688c1785f9ce ""
   "/usr/share/texmf-dist/tex/latex/float/float.sty" 1680514707 6749 16d2656a1984957e674b149555f1ea1d ""
@@ -85,12 +84,13 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1680514707 39911 2da6c67557ec033436fe5418a70a8a61 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1682553373 334215 ad2feb41952e3720830b65f83a01c5b0 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1682553350 8204105 6110b5a1a9c9acba8a1e4411c7463923 ""
+  "BFS.tex" 1683153135 10883 d577df113c309977dd3357395ae4554c ""
   "hyphenat.sty" 1683000760 5797 4b92397cd71c153f9449ca4d31d09d7a ""
   "images/logo.png" 1682995676 75134 0e5b6beb315a934c0354d8e8615c3057 ""
-  "report.aux" 1683149674 1277 591060db7dbdc2e387f921ca5304f908 "pdflatex"
-  "report.out" 1683149674 549 ba9c6c6fc28335c75e1d2b492df09568 "pdflatex"
-  "report.tex" 1683149672 9661 85defe16d1b3937fbd2609cd824dff33 ""
-  "report.toc" 1683149674 385 32f5ba97bd05528d6ca51a27b208a848 "pdflatex"
+  "report.aux" 1683153152 1413 701f9c680d77d351eca7e5c7fb649e99 "pdflatex"
+  "report.out" 1683153152 753 de62c24934fad34d757bf298fa7fdbd0 "pdflatex"
+  "report.tex" 1683153151 4367 16b58116895d09d224202d902cde0030 ""
+  "report.toc" 1683153152 480 4b0602606ea364b225cfdfc138f663d8 "pdflatex"
   (generated)
   "report.aux"
   "report.log"
