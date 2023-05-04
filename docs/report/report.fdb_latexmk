@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1683153432 "/home/juansgc/Documents/Univalle/Semestre_07/Inteligencia_Artificial/project_one_ai/docs/report/report.tex" "report.pdf" "report" 1683153433 0
+["pdflatex"] 1683171299 "/home/juansgc/Documents/Univalle/Semestre_07/Inteligencia_Artificial/project_one_ai/docs/report/report.tex" "report.pdf" "report" 1683171300 0
   "/home/juansgc/Documents/Univalle/Semestre_07/Inteligencia_Artificial/project_one_ai/docs/report/report.tex" 1683153432 3178 879344154eb67819b826c5c840b896e7 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1680514707 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1680514707 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -86,15 +86,15 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1682553350 8204105 6110b5a1a9c9acba8a1e4411c7463923 ""
   "BFS.tex" 1683153135 10883 d577df113c309977dd3357395ae4554c ""
   "IDS.tex" 1683153254 42 a1ff5af2e08c3f183084fd872d17fa89 ""
-  "UCS.tex" 1683153340 35 320fffd81ecc72afe6ed8a8ed1e2ba98 ""
+  "UCS.tex" 1683171299 9089 d912b496d015b3f9ce24256757a62bc5 ""
   "conclutions.tex" 1683153390 27 937c652bbea1538a87f3636fb014e76c ""
-  "desarrollo.tex" 1683153291 1294 92ec49674c735e59bed721b2ede72c70 ""
+  "desarrollo.tex" 1683170647 1654 9794e35e818f93de586a80e615d01be9 ""
   "hyphenat.sty" 1683000760 5797 4b92397cd71c153f9449ca4d31d09d7a ""
   "images/logo.png" 1682995676 75134 0e5b6beb315a934c0354d8e8615c3057 ""
-  "report.aux" 1683153432 1556 9b8e2c45870aa7a4c4cc906547c754b9 "pdflatex"
-  "report.out" 1683153432 992 956bcca8517c0fee31d1c0a612380605 "pdflatex"
+  "report.aux" 1683171300 1556 da4cdfde372a461f232829b382f42b70 "pdflatex"
+  "report.out" 1683171300 992 956bcca8517c0fee31d1c0a612380605 "pdflatex"
   "report.tex" 1683153432 3178 879344154eb67819b826c5c840b896e7 ""
-  "report.toc" 1683153432 582 9555acb4461530034e7e94c044edf812 "pdflatex"
+  "report.toc" 1683171300 582 cbe9215cb5f64691d221376fbfb95b22 "pdflatex"
   (generated)
   "report.aux"
   "report.log"

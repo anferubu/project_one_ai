@@ -2,7 +2,7 @@
 \contentsline {section}{\numberline {1}Introducción}{2}{section.1}%
 \contentsline {section}{\numberline {2}Objetivo}{3}{section.2}%
 \contentsline {section}{\numberline {3}Desarrollo}{4}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Búsqueda por amplitud}{5}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Búsqueda por costo uniforme}{14}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Búsqueda por profundidad iterativa}{15}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Conclusión}{16}{section.4}%
+\contentsline {subsection}{\numberline {3.1}Búsqueda por amplitud}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Búsqueda por costo uniforme}{15}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Búsqueda por profundidad iterativa}{22}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Conclusión}{23}{section.4}%
