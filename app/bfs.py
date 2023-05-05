@@ -38,11 +38,16 @@ class BFS(Constant):
         self._add_to_queue(self.start)
         self._mark_visited(self.start)
 
+        level = 0
+
         while self.queue:
             current = self.queue.popleft()
+            if self.levels[current] > level:
+                level = self.levels[current]
             if self._is_goal(current):
                 break
-            self._explore_neighbors(current)
+            self._explore_neighbors(current, level)
+            print(current)
         return self._backtrack()
 
 
@@ -58,27 +63,23 @@ class BFS(Constant):
             (List): path from the start position to the end position.
         """
         self._initialize()
-
-        # Enqueue the starting position and mark it as visited.
         self._add_to_queue(self.start)
         self._mark_visited(self.start)
 
-        # Initialize a variable to keep track of the direction.
-        # 1 for left to right, -1 for right to left.
-        direction = 1
+        direction = 1  # 1 for left to right, -1 for right to left.
+        level = 0
 
         while self.queue:
-            if direction == 1:
-                current = self.queue.popleft()
-            else:
-                current = self.queue.pop()
+            # Determine the level of the current to know its direction.
+            current = self.queue[0] if direction == 1 else self.queue[-1]
+            if self.levels[current] > level:
+                level = self.levels[current]
+                direction *= -1
+            current = self.queue.popleft() if direction == 1 else self.queue.pop()
+            print(f'{current} ({direction})')
             if self._is_goal(current):
                 break
-            self._explore_neighbors(current, direction)
-
-            # Change direction if the queue is not empty.
-            if self.queue:
-                direction *= -1
+            self._explore_neighbors(current, level, direction)
 
         return self._backtrack()
 
@@ -92,6 +93,7 @@ class BFS(Constant):
         self.visited = set()    # disordered, unique
         self.visited_list = []  # ordered
         self.parent = {self.start: None}
+        self.levels = {self.start: 0}  # the level of a node
 
 
     def _is_goal(self, position:tuple[int, int]) -> bool:
@@ -107,19 +109,23 @@ class BFS(Constant):
         return position == self.goal
 
 
-    def _explore_neighbors(self, current:tuple[int, int], dir:int|None=None):
+    def _explore_neighbors(self, current:tuple[int, int], level:int|None=None, dir:int|None=None):
         """
         Evaluates neighboring cells from a given position based on
         possible moves.
 
         Args:
             current (tuple): a specific position within the maze.
+            level (int): indicates the level of the current node.
             dir (int): indicates the search direction.
                          1 or None: from left to right.
                         -1: from right to left.
         """
         # Define the possible moves: ↑, →, ↓, ←
-        moves = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+        if dir == None or dir == 1:
+            moves = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+        else:
+            moves = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 
         for move in moves:
             # Calculates the next position according to the movement.
@@ -129,6 +135,9 @@ class BFS(Constant):
                 self._mark_visited(next_pos)
                 self._add_to_queue(next_pos, dir)
                 self._set_parent(next_pos, current)
+
+                # Set the level of the next position.
+                self.levels[next_pos] = level + 1
 
 
     def _is_valid_position(self, position:tuple[int, int]) -> bool:
