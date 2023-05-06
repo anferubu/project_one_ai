@@ -1,0 +1,79 @@
+Para tener un rango de pruebas mas eficiente, se implemento una funcionalidad la cual permite generar laberintos aleatorios, asignándole el tamaño en filas y columnas mediante el uso de una interfaz.
+\\\newline
+La interfaz es implementada por la clase \lstinline{Random()}, la cual proporciona los métodos encargados de crear la ventana y así mismo, a elección del usuario generar la matriz aleatoria regida por los valores ingresados en filas y columnas por parte del usuario. \\
+\begin{lstlisting}
+
+class Random(Constant):
+    
+    def __init__(self, parent):
+        self.parent=parent
+        self.master = tk.Tk()
+        self.master.resizable(False, False)
+
+        tk.Label(self.master, text="Ingrese los datos")
+        .grid(row=0, column=0, columnspan=2)
+        
+        tk.Label(self.master, text="Filas:")
+        .grid(pady=5, row=1, column=0, sticky='nw')
+        
+        tk.Label(self.master, text="Columnas:")
+        .grid(pady=5, row=2, column=0, sticky='nw')
+
+        self.rows = tk.Entry(self.master, width=20)
+        self.rows.grid(padx=5, row=1, column=1)
+        self.columns = tk.Entry(self.master, width=20)
+        self.columns.grid(padx=5, row=2, column=1)
+
+        tk.Button(self.master, text='Cancelar',
+        command=self._destroy)
+        .grid(pady=10, row=3, column=0, sticky='nsew')
+   
+        tk.Button(self.master, text="Aceptar",
+        command=self._generate_matrix)
+        .grid(pady=10, row=3, column=1, sticky='nsew')
+        self.master.mainloop()
+\end{lstlisting}
+\clearpage 
+Los siguientes métodos encapsulan la lógica de la clase \lstinline{Random()}, la cual permite que la funcionalidad ya nombrada, se implemente perfectamente.\\\
+
+\lstinline{_destroy()} Método que cierra la ventana creada por el método \lstinline{__init__()}. Este método es llamado por el botón \lstinline{"Cancelar"} en la ventana.\\
+\begin{lstlisting}
+def _destroy(self):
+        self.master.destroy()
+\end{lstlisting}
+
+\lstinline{_print_data()} Método de prueba que imprime en la consola los valores ingresados por el usuario para el número de filas y columnas. Este método no se utiliza en la aplicación final.\\
+\begin{lstlisting}
+def _print_data(self):
+        print(self.rows.get(), self.columns.get())
+\end{lstlisting}
+\clearpage 
+Finalmente se tiene el método \lstinline{_generate_matrix()} el cual se encarga de generar la matriz aleatoria para el tablero del juego. Primero obtiene los valores ingresados por el usuario para el número de filas y columnas. Si los valores ingresados no son números, muestra un mensaje de error y retorna. Si los valores son números, se convierten a enteros y se crea la matriz aleatoria utilizando la función \lstinline{np.random.choice()} de la librería NumPy. Esta función selecciona aleatoriamente elementos de la lista values (que contiene cuatro constantes definidas en la clase padre Constant) para llenar la matriz. Además, coloca aleatoriamente un elemento de la lista en una posición de la matriz. A continuación, se selecciona una posición aleatoria diferente de la matriz y se coloca otro elemento de la lista. Finalmente, se utiliza la matriz generada para actualizar el atributo maze del objeto parent (que es un objeto de la clase Maze) y se llama al método \lstinline{_show_new_board()} de parent para mostrar el nuevo tablero. Luego, se llama al método \lstinline{_destroy()} para cerrar la ventana.\\
+\begin{lstlisting}
+def _generate_matrix(self):
+     values = [self.CIGAR, self.WALL, self.EMPTY,
+       self.FOX]
+        n = self.rows.get()
+        m = self.columns.get()
+        if not str.isdigit(n) or not str.isdigit(m):
+            messagebox.showerror(message="Debe ingresar
+            numeros", title="Ocurrio un error")
+            return
+        n = int(n)
+        m = int(m)
+        new_matrix = np.random.choice(values, size=(n,m))
+        new_matrix[np.random.randint(0,n)][np.
+        random.randint(0, m)] = self.PINOCCHIO
+
+        while True:
+            row_g = np.random.randint(0,n)
+            col_g = np.random.randint(0, m)
+            if(new_matrix[row_g][col_g] != self.PINOCCHIO):
+                new_matrix[row_g][col_g] = self.GEPETTO
+                break
+        self.parent.maze = Maze('', matrix=new_matrix)
+        self.parent.matrix = self.parent.maze.matrix
+        self.parent._show_new_board()
+        self._destroy()
+\end{lstlisting}
+
