@@ -31,81 +31,85 @@ Mientras la cola tenga elementos, se retira el primero de ellos y se evalúa si 
 La lógica del algoritmo está separada en distintos métodos auxiliares que facilitan la lectura del código. Posteriormente se analizará cada método utilizado en la solución.\\
 \begin{lstlisting}
 def solve(self) -> list|str:
-    """
-    Implements the BFS algorithm.This implementation
-    avoids returning to already visited nodes.
-    Returns:
-        (List): path from the start position to the
-        end position.
-    """
-    self._initialize()
+        """
+        Implements the BFS algorithm.This implementation
+        avoids returning to already visited nodes.
 
-    # Enqueue the starting position and mark it as visited.
-    self._add_to_queue(self.start)
-    self._mark_visited(self.start)
+        Returns:
+            (List): path from the start position to the 
+            end position.
+        """
+        self._initialize()
 
-    while self.queue:
-        current = self.queue.popleft()
-        if self._is_goal(current):
-            break
-        self._explore_neighbors(current)
-    return self._backtrack()
+        # Enqueue the starting position and mark it 
+        as visited.
+        self._add_to_queue(self.start)
+        self._mark_visited(self.start)
+
+        level = 0
+
+        while self.queue:
+            current = self.queue.popleft()
+            if self.levels[current] > level:
+                level = self.levels[current]
+            if self._is_goal(current):
+                break
+            self._explore_neighbors(current, level)
+            print(current)
+        return self._backtrack()
 \end{lstlisting}
 \clearpage
 El algoritmo alternativo de la búsqueda por amplitud, en donde se empieza buscando de izquierda a derecha y en el siguiente nivel de derecha a izquierda, y viceversa, se implementó en el método \lstinline{solve_zigzag()}.
 \\\newline
-Este es muy similar al anterior, solamente que se añade una variable direction (1 o -1) para controlar el sentido de la búsqueda. Así, sí direction es 1, se saca el primer elemento de la cola, si es -1 se saca el último. Cuando se termina de explorar todos los vecinos y si aún hay elementos en la cola, \lstinline{direction} cambia de signo para comenzar a buscar en el siguiente nivel desde la dirección opuesta.
-\clearpage
+Este es muy similar al anterior, solamente que se añade una variable direction (1 o -1) para controlar el sentido de la búsqueda. Así, sí direction es 1, se saca el primer elemento de la cola, si es -1 se saca el último. Cuando se termina de explorar todos los vecinos y si aún hay elementos en la cola, \lstinline{direction} cambia de signo para comenzar a buscar en el siguiente nivel desde la dirección opuesta.\\
 \begin{lstlisting}
 def solve_zigzag(self) -> list|str:
-    """
-    Implements the BFS algorithm in a zigzag pattern. For
-    this, it uses a list and takes out the nodes from the
-    extreme left or right depending on the level.
-    This implementation avoids returning to already visited
-    nodes.
-    Returns:
-        (List): path from the start position to the end
-        position.
-    """
-    self._initialize()
-
-    # Enqueue the starting position and mark it as visited.
-    self._add_to_queue(self.start)
-    self._mark_visited(self.start)
-
-    # Initialize a variable to keep track of the direction.
-    # 1 for left to right, -1 for right to left.
-    direction = 1
-
-    while self.queue:
-        if direction == 1:
-            current = self.queue.popleft()
-        else:
-            current = self.queue.pop()
-        if self._is_goal(current):
-            break
-        self._explore_neighbors(current, direction)
-
-        # Change direction if the queue is not empty.
-        if self.queue:
-            direction *= -1
-
-    return self._backtrack()
+        """
+        Implements the BFS algorithm in a zigzag pattern. 
+        For this, it uses a list and takes out the nodes 
+        from the extreme left or rightdepending on the level.
+        This implementation avoids returning to already
+        visited nodes.
+        Returns: (List): path from the start position to 
+                    the end position.
+        """
+        self._initialize()
+        self._add_to_queue(self.start)
+        self._mark_visited(self.start)
+        direction = 1  # 1 for left to right, -1 for right
+        to left.
+        level = 0
+        while self.queue:
+            # Determine the level of the current to know 
+            its direction.
+            current = self.queue[0] if direction == 1 
+            else self.queue[-1]
+            if self.levels[current] > level:
+                level = self.levels[current]
+                direction *= -1
+            current = self.queue.popleft() if direction == 1 
+            else self.queue.pop()
+            print(f'{current} ({direction})')
+            if self._is_goal(current):
+                break
+            self._explore_neighbors(current, level,
+            direction)
+        return self._backtrack()
 \end{lstlisting}
 \clearpage
 A continuación, vamos a ver los métodos auxiliares que encapsulan parte de la lógica.\\\newline
 El método \lstinline{_initialize()} inicializa una cola, un objeto Set (almacena elementos no repetidos) que guardará los nodos visitados, una lista de nodos visitados en orden y un diccionario \lstinline{parent} que servirá para reconstruir el camino desde la meta hasta el inicio.\\
 \begin{lstlisting}
 def _initialize(self):
-    """
-    Initializes the queue, the visited set and the parent
-    dictionary to keep track of the path.
-    """
-    self.queue = deque()
-    self.visited = set()    # disordered, unique
-    self.visited_list = []  # ordered
-    self.parent = {self.start: None}
+        """
+        Initializes the queue, the visited set and the
+        parent dictionary to keep track of the path.
+        """
+        self.queue = deque()
+        self.visited = set()    # disordered, unique
+        self.visited_list = []  # ordered
+        self.parent = {self.start: None}
+        self.levels = {self.start: 0}
 \end{lstlisting}
 El método \lstinline{_is_goal()} toma una posición dentro del laberinto y evalúa si es meta, es decir, si corresponde con Gepetto.\\
 \begin{lstlisting}
@@ -125,30 +129,40 @@ El método \lstinline{_explore_neighbors()} toma una posición dentro del laberi
 \\\newline
 Luego, para cada movimiento calcula la próxima posición y si dicha posición es válida (e.g. está dentro de los límites del laberinto) se añade dicha casilla a la lista de nodos visitados, a la cola (según la dirección dada) y al diccionario, indicando que el padre de la próxima posición es el nodo actual.\\
 \begin{lstlisting}
-def _explore_neighbors(self,
-    current:tuple[int, int], dir:int|None=None):
-    """
-    Evaluates neighboring cells from a given position based
-    on possible moves.
-    Args:
-        current (tuple): a specific position within the maze.
-        dir (int): indicates the search direction.
-                     1 or None: from left to right.
-                    -1: from right to left.
-    """
-    # Define the possible moves: Up, Right, Down, Left
-    moves = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+def _explore_neighbors(self, current:tuple[int, int],
+level:int|None=None, dir:int|None=None):
+        """
+        Evaluates neighboring cells from a given position
+        based on possible moves.
 
-    for move in moves:
-        # Calculates the next position according to the
-        # movement.
-        next_pos = (current[0] + move[0],
-                    current[1] + move[1])
+        Args:
+            current (tuple): a specific position within 
+            the maze.
+            level (int): indicates the level of the current
+            node.
+            dir (int): indicates the search direction.
+                         1 or None: from left to right.
+                        -1: from right to left.
+        """
+        # Define the possible moves: up, right, down, left
+        if dir == None or dir == 1:
+            moves = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+        else:
+            moves = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 
-        if self._is_valid_position(next_pos):
-            self._mark_visited(next_pos)
-            self._add_to_queue(next_pos, dir)
-            self._set_parent(next_pos, current)
+        for move in moves:
+            # Calculates the next position according to the
+            movement.
+            next_pos = (current[0] + move[0], current[1] +
+            move[1])
+
+            if self._is_valid_position(next_pos):
+                self._mark_visited(next_pos)
+                self._add_to_queue(next_pos, dir)
+                self._set_parent(next_pos, current)
+                # Set the level of the next position.
+                self.levels[next_pos] = level + 1
+                
 \end{lstlisting}
 \clearpage
 El método \lstinline{_is_valid_position()} toma una posición (x, y) y evalúa si dicha coordenada está dentro de los límites del laberinto, si no ha sido visitada antes y si no corresponde a un muro. Esas son las condiciones necesarias para considerar una posición válida.\\
